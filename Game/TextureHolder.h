@@ -4,7 +4,7 @@
 
 namespace Textures
 {
-	enum ID{ Landscape, Airplane, Missile };
+	enum ID{ Landscape, Airplane, Missile, Enemies };
 }
 
 class TextureHolder
