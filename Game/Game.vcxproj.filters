@@ -23,10 +23,13 @@
     <ClInclude Include="TextureHolder.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
-    <ClInclude Include="ClassGame.h">
+    <ClInclude Include="Player.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
-    <ClInclude Include="ClassEnemies.h">
+    <ClInclude Include="Enemies.h">
+      <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
   </ItemGroup>

@@ -67,8 +67,9 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClassGame.h" />
-    <ClInclude Include="ClassEnemies.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Enemies.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="TextureHolder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
