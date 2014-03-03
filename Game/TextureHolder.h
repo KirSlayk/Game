@@ -4,7 +4,7 @@
 
 namespace Textures
 {
-	enum ID{ Landscape, LandscapeTwo, Airplane, Missile, Enemies };
+	enum ID{ Landscape, Airplane, Missile, Enemies };
 }
 
 class TextureHolder
@@ -30,3 +30,5 @@ sf::Texture& TextureHolder::get(Textures::ID id)
 	auto found = mTextureMap.find(id);
 	return *found->second;
 }
+
+

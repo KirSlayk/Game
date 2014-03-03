@@ -3,6 +3,7 @@
 
 
 
+
 class Player
 {
 private:
@@ -17,6 +18,8 @@ public:
 	Player();
 	void handlePlayerInput( sf::Keyboard::Key key, bool isPressed );
 	void PlayerRun( sf::Time TimePerFrame );
+	bool ReturnmIsMovingRight();
+	bool ReturnmIsMovingLeft();
 	sf::Sprite ReturnSpritePlayer();
 	
 	
@@ -69,4 +72,14 @@ void Player::PlayerRun( sf::Time TimePerFrame )
 	
 	playerPlane.move(movement * TimePerFrame.asSeconds());
 	
+}
+
+bool Player::ReturnmIsMovingRight()
+{
+	return mIsMovingRight;
+}
+
+bool Player::ReturnmIsMovingLeft()
+{
+	return mIsMovingLeft;
 }

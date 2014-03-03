@@ -1,6 +1,4 @@
 #pragma once
-//#include <iostream>
-#include <SFML/Graphics.hpp>
 #include <cmath>
 #include "TextureHolder.h"
 
@@ -12,9 +10,15 @@ private:
 	int speed;
 public:
 	Enemies();
+	void Enem( Enemies *enem);
 	void move(double time);
 	sf::Sprite spriteEnemies;
+	Enemies *prev;
+	Enemies *next;
 };
+
+
+
 
 Enemies::Enemies()
 	: spriteEnemies()
@@ -32,5 +36,5 @@ void Enemies::move(double time)
 {
 	//sf::Vector2f movementEnemies(0.f, 0.f);
 	//movementEnemies.x-= ( time / speed  );
-	spriteEnemies.move(-3,0);
+	spriteEnemies.move(time,0);
 }
