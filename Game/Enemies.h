@@ -2,39 +2,36 @@
 #include <cmath>
 #include "TextureHolder.h"
 
-class Enemies
+class Enemy
 {
 private:
 	TextureHolder textures;
 	double xPos, yPos;
 	int speed;
-public:
-	Enemies();
-	void Enem( Enemies *enem);
-	void move(double time);
 	sf::Sprite spriteEnemies;
-	Enemies *prev;
-	Enemies *next;
+
+public:
+	Enemy();
+	void move(double time);
+	sf::Sprite ReturnSpriteEnemies();
 };
 
-
-
-
-Enemies::Enemies()
-	: spriteEnemies()
-	, textures()
+Enemy::Enemy()
 {
 	speed = 100;
 	xPos = (rand() % 60) + 800;
 	yPos = (rand() % 550) + 1;
-	textures.load(Textures::Enemies, "C:/work/Game/Game/neghvar4.png");
-	spriteEnemies.setTexture(textures.get(Textures::Enemies));
+	textures.load(Textures::Enemy, "C:/work/Game/Game/neghvar4.png");
+	spriteEnemies.setTexture(textures.get(Textures::Enemy));
 	spriteEnemies.setPosition(xPos, yPos);
 }
 
-void Enemies::move(double time)
+void Enemy::move(double time)
 {
-	//sf::Vector2f movementEnemies(0.f, 0.f);
-	//movementEnemies.x-= ( time / speed  );
 	spriteEnemies.move(time,0);
+}
+
+sf::Sprite Enemy::ReturnSpriteEnemies()
+{
+	return spriteEnemies;
 }

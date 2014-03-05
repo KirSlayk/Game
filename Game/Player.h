@@ -28,8 +28,6 @@ public:
 
 
 Player::Player()
-	: playerPlane()
-	, textures()
 {
 	mIsMovingUp = mIsMovingDown = mIsMovingLeft = mIsMovingRight = false;
 	speed = 250;

@@ -1,43 +1,20 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "Enemies.h"
 #include "Player.h"
 
-
-void Push ( Enemies *Tail, int n )
-{
-	
-	static int head = 1;
-	
-	for (int i = 0; i<n; i++){	
-		Enemies Present;
-
-		if ( head )
-			head = 0;
-		
-		else {
-			Present.prev=Tail; //”казываем адрес на предыдущий элемент в соотв. поле
-			Tail->next=&Present; //”казываем адрес следующего за хвостом элемента
-			Tail = &Present; //ћен€ем адрес хвоста
-		}
-	}
-	Tail->next = NULL;
-	
-}
-
-
-
+using namespace std;
 
 class Game
 {
 public:
 	Game();
 	void run();
-	Enemies Pop(Enemies *enemies);
 	
 private:
 	void processEvents();
-	void update(sf::Time deltaTime, int n);
+	void update(sf::Time deltaTime);
 	void render( int n );
 	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 private:
@@ -47,14 +24,13 @@ private:
 	sf::Sprite backGround;
 	sf::Sprite backGroundTwo;
 	
-	Enemies eneMies;
+	vector<Enemy*> eneMies;
 	Player plaYer;
 	
 	
 	sf::Time TimePerFrame; 
-
-	
 };
+
 
 Game::Game()
 	: mWindow(sf::VideoMode(900, 600), "SFML Application")
@@ -81,23 +57,18 @@ void Game::run()
 	TimePerFrame = sf::seconds(1.f/10000.f);
 
 	mWindow.setVerticalSyncEnabled(true);
-	
+	for (int i = 0; i < 3; ++i)	
+		eneMies.push_back(new Enemy());		
+
 	while (mWindow.isOpen())
 	{
-		if ( timeForEneMies )
-		{
-			n = 0;
-			n = timeForEneMies % 6;
-			Push( &eneMies, n );
-		}
-		
 		processEvents();
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
 			timeSinceLastUpdate -= TimePerFrame;
 			processEvents();
-			update(TimePerFrame, n);
+			update(TimePerFrame);
 		}
 		timeForEneMies = clock.getElapsedTime().asSeconds();
 		render( n );
@@ -124,7 +95,7 @@ void Game::processEvents()
 	}
 }
 
-void Game::update(sf::Time TimePerFrame, int n)
+void Game::update(sf::Time TimePerFrame)
 {
 	plaYer.PlayerRun( TimePerFrame );
 
@@ -132,22 +103,22 @@ void Game::update(sf::Time TimePerFrame, int n)
 	{
 		backGround.move(-50 * TimePerFrame.asSeconds(),0);
 		backGroundTwo.move(-50 * TimePerFrame.asSeconds(),0);
-		for (int i = 0; i < n; i++ ) 
-			eneMies.move(-100 * TimePerFrame.asSeconds());
+		for (int i = 0; i < eneMies.size(); i++ ) 
+			eneMies[i]->move(-100 * TimePerFrame.asSeconds());
 	}
 
 	else if (plaYer.ReturnmIsMovingRight())
 	{
 		backGround.move(-150 * TimePerFrame.asSeconds(),0);
 		backGroundTwo.move(-150 * TimePerFrame.asSeconds(),0);
-		for (int i = 0; i < n; i++ ) 
-			eneMies.move(-200 * TimePerFrame.asSeconds());
+		for (int i = 0; i < eneMies.size(); i++ ) 
+			eneMies[i]->move(-200 * TimePerFrame.asSeconds());
 	}
 	else{
 		backGround.move(-100 * TimePerFrame.asSeconds(),0);
 		backGroundTwo.move(-100 * TimePerFrame.asSeconds(),0);
-		for (int i = 0; i < n; i++ ) 
-			eneMies.move(-150 * TimePerFrame.asSeconds());
+		for (int i = 0; i < eneMies.size(); i++ ) 
+			eneMies[i]->move(-150 * TimePerFrame.asSeconds());
 	}
 	if (backGround.getPosition().x <= -1150)
 		backGround.setPosition(1200,0);
@@ -155,13 +126,6 @@ void Game::update(sf::Time TimePerFrame, int n)
 		backGroundTwo.setPosition(1200,0);
 }
 
-/*Enemies Game:: Pop ( Enemies *enemies )
-{
-	Enemies *present;
-	present = enemies->next;
-	enemies = present;
-	return *enemies;
-}*/
 
 void Game::render( int n )
 {
@@ -171,9 +135,8 @@ void Game::render( int n )
 	mWindow.draw(backGroundTwo);
 	mWindow.draw(backGround);
 	mWindow.draw(plaYer.ReturnSpritePlayer());
-	for ( int i = 0; i<n; i++ ){
-		mWindow.draw(eneMies.spriteEnemies);
-		//eneMies = Pop(&eneMies);
+	for ( int i = 0; i < eneMies.size(); i++ ){
+		mWindow.draw(eneMies[i]->ReturnSpriteEnemies());
 	}
 	mWindow.display();
 }

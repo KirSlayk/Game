@@ -4,7 +4,7 @@
 
 namespace Textures
 {
-	enum ID{ Landscape, Airplane, Missile, Enemies };
+	enum ID{ Landscape, Airplane, Missile, Enemy };
 }
 
 class TextureHolder
@@ -14,8 +14,7 @@ public:
 	sf::Texture& get(Textures::ID id);
 	const sf::Texture& get(Textures::ID id) const;
 private:
-	std::map<Textures::ID,
-	std::unique_ptr<sf::Texture>> mTextureMap;
+	std::map<Textures::ID, std::unique_ptr<sf::Texture>> mTextureMap;
 };
 
 void TextureHolder::load(Textures::ID id, const std::string& filename)
