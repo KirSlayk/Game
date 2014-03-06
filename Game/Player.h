@@ -1,8 +1,7 @@
 #pragma once
+#include "Bullet.h"
 
-
-
-
+using namespace std;
 
 class Player
 {
@@ -12,7 +11,7 @@ private:
 	double strength;
 	double HP;
 	double speed;
-	bool mIsMovingUp, mIsMovingDown, mIsMovingLeft, mIsMovingRight;
+	bool mIsMovingUp, mIsMovingDown, mIsMovingLeft, mIsMovingRight, mIsFire;
 
 public:
 	Player();
@@ -20,8 +19,10 @@ public:
 	void PlayerRun( sf::Time TimePerFrame );
 	bool ReturnmIsMovingRight();
 	bool ReturnmIsMovingLeft();
+	bool GetmIsFire();
 	sf::Sprite ReturnSpritePlayer();
-	
+	void FalsemIsFire();
+	int iteratorForBullet;
 	
 	
 };
@@ -29,13 +30,14 @@ public:
 
 Player::Player()
 {
-	mIsMovingUp = mIsMovingDown = mIsMovingLeft = mIsMovingRight = false;
+	mIsMovingUp = mIsMovingDown = mIsMovingLeft = mIsMovingRight = mIsFire = false;
 	speed = 250;
-	HP = 100;
+	HP = 10000;
 	strength = 50;
 	textures.load(Textures::Airplane, "C:/work/Game/Game/alienblaster.png");
 	playerPlane.setTexture(textures.get(Textures::Airplane));
 	playerPlane.setPosition(0.f, 250.f);
+	iteratorForBullet = -1;
 }
 
 sf::Sprite Player:: ReturnSpritePlayer()
@@ -43,6 +45,10 @@ sf::Sprite Player:: ReturnSpritePlayer()
 	return playerPlane;
 }
 
+void Player::FalsemIsFire()
+{
+	mIsFire = false;
+}
 void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
 	if (key == sf::Keyboard::W)
@@ -53,6 +59,9 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 		mIsMovingLeft = isPressed;
 	else if (key == sf::Keyboard::D)
 		mIsMovingRight = isPressed;
+	else if (key == sf::Keyboard::F)
+		mIsFire = isPressed;
+	
 }
 
 void Player::PlayerRun( sf::Time TimePerFrame )
@@ -80,4 +89,9 @@ bool Player::ReturnmIsMovingRight()
 bool Player::ReturnmIsMovingLeft()
 {
 	return mIsMovingLeft;
+}
+
+bool Player::GetmIsFire()
+{
+	return mIsFire;
 }
