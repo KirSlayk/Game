@@ -6,8 +6,6 @@
 #include <ctime>
 #include <cstdlib>
 
-
-
 void main()
 {
 	Game game;
