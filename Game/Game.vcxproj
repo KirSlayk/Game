@@ -47,7 +47,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\пк\Desktop\SFML\SFML-2.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>"sfml-graphics-s-d.lib";"sfml-window-s-d.lib";"sfml-system-s-d.lib";"sfml-audio-s-d.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"sfml-window-s-d.lib";"sfml-graphics-s-d.lib";"sfml-system-s-d.lib";"sfml-audio-s-d.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -64,13 +64,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="TextureHolder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="std.h" />
     <ClInclude Include="TextureHolder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

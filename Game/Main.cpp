@@ -1,15 +1,7 @@
-#pragma once
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Game.h"
-#include <cstdlib>
-#include <ctime>
-#include <cstdlib>
+#include "std.h"
 
 void main()
 {
 	Game game;
-	game.run();
+	game.Run_Game();
 }
-
-
