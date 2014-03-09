@@ -15,26 +15,32 @@ public:
 	
 private:
 	void processEvents();
-	void update(sf::Time deltaTime);
-	void render( int n );
+	void update();
+	void render();
 	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 	void runWorld();
 	void collision();
 	void shoting();
 	void borderCheck();
 private:
+	
 	sf::RenderWindow mWindow;
 	TextureHolder textures;
+	TextureHolder texturBang;
 	
 	sf::Sprite backGround;
 	sf::Sprite backGroundTwo;
+
+	sf::Time TimePerFrame; 
 	
 	vector<Enemy*> eneMies;
-	Player plaYer;
 	vector<Bullet*> bulLet;
+	Player plaYer;
 	
-	
-	sf::Time TimePerFrame; 
+	int speed;
+	float koef;
+	int timeForEneMies;
+	int numOfEnemy;
 };
 
 
@@ -43,84 +49,96 @@ Game::Game()
 	, textures()
 {
 	srand(time(NULL));
-	
+	speed = 50;
+	koef = 0.f;
+	TimePerFrame = sf::seconds(1.f/10000.f);
 	textures.load(Textures::Landscape, "C:/work/Game/Game/Cosmos2.png");
 	backGround.setTexture(textures.get(Textures::Landscape));
 	backGround.setPosition(0.f,0.f);
 	backGroundTwo.setTexture(textures.get(Textures::Landscape));
 	backGroundTwo.setPosition(1200.f,0.f);
+
+	int timeForEneMies = 0;
+	numOfEnemy = 1;
+	texturBang.load(Textures::Bang,  "C:/work/Game/Game/explosion.png");
 }
 
 void Game::run()
 {
 	
 	sf::Clock clock;
-	
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
-	int timeForEneMies = 0;
-	int n = 1;
-
-	TimePerFrame = sf::seconds(1.f/10000.f);
-
-	mWindow.setVerticalSyncEnabled(true);
 	
-
+	
+	
+	
+	
 	while (mWindow.isOpen())
 	{
-		if ( timeForEneMies ){
-			n = timeForEneMies % 3;
-			if (eneMies.size() < 10 ) 
-				for (int i = 0; i < n - 1; ++i)	
-					eneMies.push_back(new Enemy());		
-		}
-
+		
+		
 		processEvents();
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
 			timeSinceLastUpdate -= TimePerFrame;
 			processEvents();
-			update(TimePerFrame);
+			update();
 		}
 		
+		bulLet.shrink_to_fit();
+		cout<<bulLet.capacity()<<"\n";
 		shoting();
-		borderCheck();
 		collision();
+		borderCheck();	
+		
 
 		timeForEneMies = clock.getElapsedTime().asMilliseconds() / 5 ;
-		render( n );
+		
+		
+		render();
 	}
 }
 
 void Game::shoting()
 {
-	if ( plaYer.GetmIsFire() ){
+	if ( plaYer.GetmIsFire() && bulLet.size() <20)
+	{
 		plaYer.iteratorForBullet++;
-		for ( int i = plaYer.iteratorForBullet; i <= plaYer.iteratorForBullet; i++ ){
-			bulLet.push_back(new Bullet());
-			bulLet[ i ]->spriteBullet.setPosition(plaYer.ReturnSpritePlayer().getPosition().x + 65, plaYer.ReturnSpritePlayer().getPosition().y + 30);
-			plaYer.FalsemIsFire();		
-		}	
+		bulLet.push_back(new Bullet());
+		bulLet[ plaYer.iteratorForBullet ]->spriteBullet.setPosition(plaYer.ReturnSpritePlayer().getPosition().x + 65, plaYer.ReturnSpritePlayer().getPosition().y + 32);
+		plaYer.FalsemIsFire();		
+		
 	}
 }
 
 void Game::borderCheck()
 {
-	for ( int i = 0; i < bulLet.size(); i++ ){
-		vector<Bullet*>::iterator itera = bulLet.begin();
-			if ( bulLet[i]->spriteBullet.getPosition().x > 900 ){
-				bulLet.erase( itera );
-				plaYer.iteratorForBullet--;
+	
+	vector<Enemy*>::iterator iterator = eneMies.begin();
+	
+	if (  bulLet.size() )
+		for ( int i = 0; i < bulLet.size() - 1; i++ ){
+			vector<Bullet*>::iterator itera = bulLet.begin();
+				if ( bulLet[i]->spriteBullet.getPosition().x >= 900 && bulLet.at( i ) )
+				{
+						bulLet.erase( itera );
+						plaYer.iteratorForBullet--;
+					
+				}
 			}
-	}
-	for ( int i = 0; i < eneMies.size(); i++ ){
-		vector<Enemy*>::iterator iterator = eneMies.begin();
+	
+	for ( int i = 0; i < eneMies.size(); i++ )
 		if ( eneMies.size() )
-			if ( eneMies[i]->spriteEnemies.getPosition().x < -100 ){
+			if ( eneMies[i]->spriteEnemies.getPosition().x < -100 )
 				eneMies.erase( iterator + i );
-				}	
-	}
+	
+	if (backGround.getPosition().x <= -1150)
+		backGround.setPosition(1200,0);
+	if (backGroundTwo.getPosition().x <= -1150)
+		backGroundTwo.setPosition(1200,0);
 }
+
 
 void Game::processEvents()
 {
@@ -141,25 +159,39 @@ void Game::processEvents()
 	}
 }
 
-void Game::update(sf::Time TimePerFrame)
+
+void Game::update()
 {
-	plaYer.PlayerRun( TimePerFrame );
-	
-	if ( plaYer.iteratorForBullet >= 0 )
-		for ( int i = 0; i <= plaYer.iteratorForBullet; i++ ){
-			bulLet[i]->BulletRun( TimePerFrame );
+	if ( timeForEneMies )
+		{
+			numOfEnemy = timeForEneMies % 3;
+			if (eneMies.size() < 8 )
+				if ( eneMies.empty() )	
+					for (int i = 0; i < numOfEnemy - 1; ++i)
+						eneMies.push_back(new Enemy());
+				else {
+					int size = eneMies.size();
+					eneMies.back();
+					for ( int i = size; i < size + numOfEnemy - 1; i++ )
+						eneMies.push_back(new Enemy());
+				}
 		}
 	
+	
+	
+	plaYer.PlayerRun();
+	
+	for ( int i = 0; i < bulLet.size(); i++ )
+		bulLet[i]->BulletRun();
+	for (int i = 0; i < eneMies.size(); i++ ) 
+		eneMies[i]->moveEnemy( &plaYer );	
+	
+	
 	runWorld();
-
-	if (backGround.getPosition().x <= -1150)
-		backGround.setPosition(1200,0);
-	if (backGroundTwo.getPosition().x <= -1150)
-		backGroundTwo.setPosition(1200,0);
 }
 
 
-void Game::render( int n )
+void Game::render()
 {
 	
 	mWindow.clear();
@@ -169,51 +201,68 @@ void Game::render( int n )
 
 	for ( int i = 0; i < bulLet.size(); i++ )
 		mWindow.draw(bulLet[i]->spriteBullet);
+	
 	mWindow.draw(plaYer.ReturnSpritePlayer());
-	for ( int i = 0; i < eneMies.size(); i++ ){
-		mWindow.draw(eneMies[i]->ReturnSpriteEnemies());
+	
+	for ( int i = 0; i < eneMies.size(); i++ )
+	{
+		mWindow.draw(eneMies[i]->spriteEnemies);
+		if ( eneMies[i]->GetDeathTime() )
+		{
+			if ( eneMies[i]->GetDeathTime() > 74 )
+			{
+			vector<Enemy*>::iterator itera = eneMies.begin();
+			eneMies.erase( itera + i );
+			}
+			else if ( eneMies[i]->GetDeathTime() <= 74 )
+				eneMies[i]->SwitchBang();
+		}
 	}
 	mWindow.display();
 }
 
 void Game::runWorld()
 {
-	int speed = -50;
-	int koef = 0;
+	sf::Vector2f movement(0.f,0.f);
 	
 	if (plaYer.ReturnmIsMovingLeft())
-		koef = 1;
+		koef = 1.f;
 	else if (plaYer.ReturnmIsMovingRight())
-		koef = 3;
-	else koef = 2;
+		koef = 3.f;
+	else koef = 2.f;
 	
-	backGround.move(koef * speed * TimePerFrame.asSeconds(),0);
-	backGroundTwo.move(koef * speed * TimePerFrame.asSeconds(),0);
-	for (int i = 0; i < eneMies.size(); i++ ) 
-		eneMies[i]->move((koef + 1) * speed * TimePerFrame.asSeconds());
+	movement.x -= speed;
+	
+	backGround.move( koef * movement * TimePerFrame.asSeconds() );
+	backGroundTwo.move( koef * movement * TimePerFrame.asSeconds() );
+	
 }
 
 void Game::collision()
 {
-	restart:
-	for (int i = 0; i < bulLet.size(); i++)
-		for (int j = 0; j < eneMies.size(); j++)
+	
+	for (int j = 0; j < eneMies.size(); j++){
+		restart:
+		for (int i = 0; i < bulLet.size(); i++)
 		{
 			if ( bulLet.size() )	
 				if ( abs(bulLet[i]->spriteBullet.getPosition().x - eneMies[j]->spriteEnemies.getPosition().x) <=5 &&
 					(bulLet[i]->spriteBullet.getPosition().y - eneMies[j]->spriteEnemies.getPosition().y) <= 40 && 
-					(bulLet[i]->spriteBullet.getPosition().y - eneMies[j]->spriteEnemies.getPosition().y) >= 5){
+					(bulLet[i]->spriteBullet.getPosition().y - eneMies[j]->spriteEnemies.getPosition().y) >= 5)
+				{
 					
 					eneMies[j]->LoweringHP( bulLet[i] );
 					vector<Bullet*>::iterator itera = bulLet.begin();
 					bulLet.erase( itera + i );
 					plaYer.iteratorForBullet--;
 					
-					if ( eneMies[j]->GetHP() <= 0 ){
-						vector<Enemy*>::iterator itera = eneMies.begin();
-						eneMies.erase( itera + j );
+					if ( eneMies[j]->GetHP() <= 0 && !eneMies[j]->GetDeathTime() ){
+						eneMies[j]->spriteEnemies.setTexture(texturBang.get(Textures::Bang));
+						eneMies[j]->DeathTime();
+						
 					}
 					goto restart; 
 				}
 		}
+	}
 }

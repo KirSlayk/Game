@@ -12,11 +12,12 @@ private:
 	double HP;
 	double speed;
 	bool mIsMovingUp, mIsMovingDown, mIsMovingLeft, mIsMovingRight, mIsFire;
+	sf::Time time;
 
 public:
 	Player();
 	void handlePlayerInput( sf::Keyboard::Key key, bool isPressed );
-	void PlayerRun( sf::Time TimePerFrame );
+	void PlayerRun();
 	bool ReturnmIsMovingRight();
 	bool ReturnmIsMovingLeft();
 	bool GetmIsFire();
@@ -38,6 +39,7 @@ Player::Player()
 	playerPlane.setTexture(textures.get(Textures::Airplane));
 	playerPlane.setPosition(0.f, 250.f);
 	iteratorForBullet = -1;
+	time = sf::seconds(1.f/10000.f);
 }
 
 sf::Sprite Player:: ReturnSpritePlayer()
@@ -53,18 +55,18 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
 	if (key == sf::Keyboard::W)
 		mIsMovingUp = isPressed;
-	else if (key == sf::Keyboard::S)
+	if (key == sf::Keyboard::S)
 		mIsMovingDown = isPressed;
-	else if (key == sf::Keyboard::A)
+	if (key == sf::Keyboard::A)
 		mIsMovingLeft = isPressed;
-	else if (key == sf::Keyboard::D)
+	if (key == sf::Keyboard::D)
 		mIsMovingRight = isPressed;
-	else if (key == sf::Keyboard::F)
+	if (key == sf::Keyboard::F)
 		mIsFire = isPressed;
 	
 }
 
-void Player::PlayerRun( sf::Time TimePerFrame )
+void Player::PlayerRun()
 {
 	sf::Vector2f movement(0.f, 0.f);
 	
@@ -77,7 +79,7 @@ void Player::PlayerRun( sf::Time TimePerFrame )
 	if (mIsMovingRight)
 		movement.x += speed;
 	
-	playerPlane.move(movement * TimePerFrame.asSeconds());
+	playerPlane.move(movement * time.asSeconds());
 	
 }
 
