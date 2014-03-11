@@ -4,6 +4,8 @@
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
+#include <string>
+#include <sstream>
 
 
 #include "SFML/Graphics.hpp"

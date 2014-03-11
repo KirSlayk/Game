@@ -27,6 +27,9 @@ private:
 	sf::Sprite backGround;
 	sf::Sprite backGroundTwo;
 
+	sf::Font font;
+	
+
 	sf::Time TimePerFrame; 
 	
 	vector<Enemy*> eneMies;
@@ -35,6 +38,8 @@ private:
 	
 	int speed;
 	float koef;
+
+	
 };
 
 

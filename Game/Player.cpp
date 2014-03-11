@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include "std.h"
 
@@ -11,7 +11,8 @@ Player::Player()
 	mIsFire = false;
 	speed = 250;
 	HP = 10000;
-	strength = 50;
+	crash = 1000;
+	killedEnemy = 0;
 	textures.Load(Textures::Airplane, "../Game/alienblaster.png");
 	playerPlane.setTexture(textures.Get(Textures::Airplane));
 	playerPlane.setPosition(0.f, 250.f);
@@ -60,12 +61,12 @@ void Player::PlayerRun_Player()
 	
 }
 
-bool Player::ReturnmIsMovingRight_Player()
+bool Player::GetmIsMovingRight_Player()
 {
 	return mIsMovingRight;
 }
 
-bool Player::ReturnmIsMovingLeft_Player()
+bool Player::GetmIsMovingLeft_Player()
 {
 	return mIsMovingLeft;
 }
@@ -73,4 +74,25 @@ bool Player::ReturnmIsMovingLeft_Player()
 bool Player::GetmIsFire_Player()
 {
 	return mIsFire;
+}
+
+
+void Player::LowingHP_Player()
+{
+	HP -= crash;
+}
+
+float Player::GetHP_Player()
+{
+	return HP;
+}
+
+void Player::SetKilledEnemy_Player()
+{
+	killedEnemy++;
+}
+
+float Player::GetNumOfKilledEnemy_Player()
+{
+	return killedEnemy;
 }

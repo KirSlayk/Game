@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include "std.h"
 
@@ -22,15 +22,12 @@ void Enemy::MoveEnemy_Enemy( Player *player )
 {
 	sf::Vector2f movement( 0.f, 0.f );
 		
-	if (player->ReturnmIsMovingLeft_Player())
+	if (player->GetmIsMovingLeft_Player())
 		movement.x -= speed - 60.f;
-	else if (player->ReturnmIsMovingRight_Player())
+	else if (player->GetmIsMovingRight_Player())
 		movement.x -= speed + 60.f;
 	else movement.x -= speed;
 	
-	
-	
-
 	spriteEnemies.move( movement * time.asSeconds() );
 }
 

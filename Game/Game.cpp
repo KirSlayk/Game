@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include "std.h"
 
@@ -15,9 +15,12 @@ Game::Game()
 	backGround.setPosition(0.f,0.f);
 	backGroundTwo.setTexture(textures.Get(Textures::Landscape));
 	backGroundTwo.setPosition(1200.f,0.f);
-
 	
 	texturBang.Load(Textures::Bang,  "../Game/explosion.png");
+	
+	
+	font.loadFromFile("../Game/MyFont.ttf");
+	
 }
 
 void Game::Run_Game()
@@ -32,10 +35,12 @@ void Game::Run_Game()
 	
 	while (mWindow.isOpen())
 	{
+		
+
 		if ( timeForEneMies )
 		{
 			numOfEnemy = timeForEneMies % 3;
-			if (eneMies.size() < 8 )
+			if (eneMies.size() < 6 )
 				if ( eneMies.empty() )	
 					for (int i = 0; i < numOfEnemy - 1; ++i)
 						eneMies.push_back(new Enemy());
@@ -148,8 +153,28 @@ void Game::Update_Game()
 
 void Game::Render_Game()
 {
+	ostringstream str;
+	ostringstream str2;
+	if ( plaYer.GetHP_Player() )
+		str<< " HP "<<plaYer.GetHP_Player();
+	str2<< "Slain Enemies "<< plaYer.GetNumOfKilledEnemy_Player();
+
+	sf::Text text;
+	sf::Text textTwo;
+	
+	text.setFont( font );
+	text.setCharacterSize( 15 );
+	text.setColor( sf::Color::Yellow );
+	text.setStyle( sf::Text::Bold );
+	text.setPosition( 0.f, 0.f );
+	text.setString(str.str());
+
+	textTwo = text;
+	textTwo.setPosition( 750.f, 0.f );
+	textTwo.setString(str2.str());
 	
 	mWindow.clear();
+
 
 	mWindow.draw(backGroundTwo);
 	mWindow.draw(backGround);
@@ -173,16 +198,20 @@ void Game::Render_Game()
 				eneMies[i]->SwitchBang_Enemy();
 		}
 	}
+
+	mWindow.draw( text );
+	mWindow.draw( textTwo );
 	mWindow.display();
+	
 }
 
 void Game::RunWorld_Game()
 {
 	sf::Vector2f movement(0.f,0.f);
 	
-	if (plaYer.ReturnmIsMovingLeft_Player())
+	if (plaYer.GetmIsMovingLeft_Player())
 		koef = 1.f;
-	else if (plaYer.ReturnmIsMovingRight_Player())
+	else if (plaYer.GetmIsMovingRight_Player())
 		koef = 3.f;
 	else koef = 2.f;
 	
@@ -214,10 +243,36 @@ void Game::Collision_Game()
 					if ( eneMies[j]->GetHP_Enemy() <= 0 && !eneMies[j]->GetDeathTime_Enemy() ){
 						eneMies[j]->spriteEnemies.setTexture(texturBang.Get(Textures::Bang));
 						eneMies[j]->DeathTime_Enemy();
+						plaYer.SetKilledEnemy_Player();
 						
 					}
 					goto restart; 
 				}
-		}
+			}
+			
+		if ( abs(eneMies[j]->spriteEnemies.getPosition().x - plaYer.ReturnSpritePlayer().getPosition().x) <=65 &&
+			abs(eneMies[j]->spriteEnemies.getPosition().y - plaYer.ReturnSpritePlayer().getPosition().y) <= 45 &&
+			abs(eneMies[j]->spriteEnemies.getPosition().y - plaYer.ReturnSpritePlayer().getPosition().y) >=1 &&
+			!eneMies[j]->GetDeathTime_Enemy())
+			{
+				eneMies[j]->spriteEnemies.setTexture(texturBang.Get(Textures::Bang));
+				eneMies[j]->DeathTime_Enemy();
+				plaYer.LowingHP_Player();
+				if ( plaYer.GetHP_Player() <= 0 ){
+					textures.Load( Textures::GameOver, "../Game/GameOver.png");
+					sf::Sprite GameOverSprite;
+					GameOverSprite.setTexture( textures.Get( Textures::GameOver ) );
+					GameOverSprite.setPosition( 40.f, -1.f );
+					sf::Event event;
+					int c;
+					while ( mWindow.isOpen() ){
+						mWindow.clear();
+						mWindow.draw( GameOverSprite );
+						mWindow.display();
+						ProcessEvents_Game();
+					}
+				}
+			}	
 	}
+	
 }
