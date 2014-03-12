@@ -1,5 +1,7 @@
 #pragma once
 
+//#include "Music.h"
+
 
 using namespace std;
 
@@ -29,12 +31,14 @@ private:
 
 	sf::Font font;
 	
+	
 
 	sf::Time TimePerFrame; 
 	
 	vector<Enemy*> eneMies;
 	vector<Bullet*> bulLet;
 	Player plaYer;
+	mMusic muSic;
 	
 	int speed;
 	float koef;

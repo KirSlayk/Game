@@ -18,8 +18,8 @@ Game::Game()
 	
 	texturBang.Load(Textures::Bang,  "../Game/explosion.png");
 	
-	
 	font.loadFromFile("../Game/MyFont.ttf");
+	
 	
 }
 
@@ -124,12 +124,18 @@ void Game::ProcessEvents_Game()
 	{
 		switch(event.type)
 		{
-		case sf::Event::KeyPressed:
-			plaYer.HandlePlayerInput_Game(event.key.code, true);
-			break;
-		case sf::Event::KeyReleased:
-			plaYer.HandlePlayerInput_Game(event.key.code, false);
-			break;
+		case sf::Event::KeyPressed:{
+			muSic.VolumeWard_mMusic( event.key.code, true );				
+			plaYer.HandlePlayerInput_Game( event.key.code, true );
+			
+								   }
+								   break;
+		case sf::Event::KeyReleased:{
+			muSic.VolumeWard_mMusic( event.key.code, false );				
+			plaYer.HandlePlayerInput_Game( event.key.code, false );
+			
+									}
+									break;
 		case sf::Event::Closed:
 			mWindow.close();
 		}
@@ -148,6 +154,8 @@ void Game::Update_Game()
 	
 	
 	RunWorld_Game();
+
+	muSic.ChangeVolume_mMusic();
 }
 
 
