@@ -8,12 +8,13 @@ class Enemy
 {
 public:
 	Enemy();
-	void MoveEnemy_Enemy( Player *player );
+	void MoveEnemy_Enemy( Player *player, Enemy *enemies  );
 	void LoweringHP_Enemy( Bullet *bullet );
 	float GetHP_Enemy();
 	void SwitchBang_Enemy();
 	void DeathTime_Enemy();
 	int GetDeathTime_Enemy();
+	
 
 	sf::Sprite spriteEnemies;
 

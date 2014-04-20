@@ -1,4 +1,4 @@
-#pragma once
+
 
 #include "std.h"
 
@@ -10,10 +10,12 @@ mMusic::mMusic()
 	deltaVolume = 5;
 	isUpVolume = false;
 	isDownVolume = false;
-	music.openFromFile( "../Game/Music.ogg" );
+	isPause = false;
+	music.openFromFile( "../Game/StarWars.ogg" );
 	music.setVolume( volume );
 	music.setLoop( true );
 	music.play();
+	
 }
 
 void mMusic::VolumeWard_mMusic( sf::Keyboard::Key key, bool isPressed )
@@ -22,6 +24,8 @@ void mMusic::VolumeWard_mMusic( sf::Keyboard::Key key, bool isPressed )
 		isUpVolume = isPressed;
 	if ( key == sf::Keyboard::Down )
 		isDownVolume = isPressed;
+	if ( key == sf::Keyboard::P )
+		isPause = isPressed;
 }
 
 void mMusic::ChangeVolume_mMusic()

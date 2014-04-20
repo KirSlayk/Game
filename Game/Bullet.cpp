@@ -1,4 +1,4 @@
-#pragma once
+
 
 #include "std.h"
 
@@ -23,3 +23,4 @@ float Bullet::GetDamage_Bullet()
 {
 	return damage;
 }
+

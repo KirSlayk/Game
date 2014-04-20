@@ -10,6 +10,6 @@ private:
 	sf::Music music;
 	float volume;
 	float deltaVolume;
-	bool isUpVolume, isDownVolume;
+	bool isUpVolume, isDownVolume, isPause;
 };
 

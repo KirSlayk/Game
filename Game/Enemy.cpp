@@ -1,4 +1,4 @@
-#pragma once
+
 
 #include "std.h"
 
@@ -8,8 +8,8 @@ Enemy::Enemy()
 	deathTime = 0;
 	speed = 150;
 	HP = 1200;
-	xPos = (rand() % 60) + 1000.f;
-	yPos = (rand() % 550) + 1.f;
+	xPos = (rand() % 600) + 1000.f;
+	yPos = (rand() % 550) + 30.f;
 	time = sf::seconds( 1.f/10000.f );
 	textures.Load(Textures::Enemy, "../Game/neghvar4.png");
 	spriteEnemies.setTexture(textures.Get(Textures::Enemy));
@@ -18,7 +18,7 @@ Enemy::Enemy()
 }
 
 
-void Enemy::MoveEnemy_Enemy( Player *player )
+void Enemy::MoveEnemy_Enemy( Player *player, Enemy *enemies )
 {
 	sf::Vector2f movement( 0.f, 0.f );
 		
@@ -27,6 +27,8 @@ void Enemy::MoveEnemy_Enemy( Player *player )
 	else if (player->GetmIsMovingRight_Player())
 		movement.x -= speed + 60.f;
 	else movement.x -= speed;
+
+	movement.y = sin( enemies->spriteEnemies.getPosition().x / 200 ) * 100; 
 	
 	spriteEnemies.move( movement * time.asSeconds() );
 }

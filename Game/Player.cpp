@@ -1,4 +1,4 @@
-#pragma once
+
 
 #include "std.h"
 
@@ -16,7 +16,6 @@ Player::Player()
 	textures.Load(Textures::Airplane, "../Game/alienblaster.png");
 	playerPlane.setTexture(textures.Get(Textures::Airplane));
 	playerPlane.setPosition(0.f, 250.f);
-	iteratorForBullet = -1;
 	time = sf::seconds(1.f/10000.f);
 }
 

@@ -8,6 +8,7 @@ class Player
 {
 public:
 	Player();
+	sf::Sprite playerPlane;
 	void HandlePlayerInput_Game( sf::Keyboard::Key key, bool isPressed );
 	void PlayerRun_Player();
 	bool GetmIsMovingRight_Player();
@@ -15,14 +16,13 @@ public:
 	bool GetmIsFire_Player();
 	sf::Sprite ReturnSpritePlayer();
 	void FalsemIsFire_Player();
-	int iteratorForBullet;
 	void LowingHP_Player();
 	float GetHP_Player();
 	void SetKilledEnemy_Player();
 	float GetNumOfKilledEnemy_Player();
+	
 
 private:
-	sf::Sprite playerPlane;
 	TextureHolder textures;
 	float HP;
 	float speed;
