@@ -4,16 +4,15 @@
 #include "Bullet.h"
 
 
-class Enemy
+class Enemy : public GeneralQuality
 {
 public:
 	Enemy();
 	void MoveEnemy_Enemy( Player *player, Enemy *enemies  );
-	void LoweringHP_Enemy( Bullet *bullet );
-	float GetHP_Enemy();
 	void SwitchBang_Enemy();
 	void DeathTime_Enemy();
 	int GetDeathTime_Enemy();
+	virtual void AppointHP();
 	
 
 	sf::Sprite spriteEnemies;
@@ -24,7 +23,6 @@ private:
 	float xPos, yPos;
 	float speed;
 	int deathTime;
-	float HP;
 	sf::Time time;
 };
 

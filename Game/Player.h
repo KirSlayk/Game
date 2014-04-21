@@ -4,32 +4,32 @@
 
 using namespace std;
 
-class Player
+class Player : public GeneralQuality
 {
 public:
 	Player();
-	sf::Sprite playerPlane;
 	void HandlePlayerInput_Game( sf::Keyboard::Key key, bool isPressed );
 	void PlayerRun_Player();
+
 	bool GetmIsMovingRight_Player();
 	bool GetmIsMovingLeft_Player();
+	
 	bool GetmIsFire_Player();
-	sf::Sprite ReturnSpritePlayer();
+	sf::Sprite* ReturnSpritePlayer();
 	void FalsemIsFire_Player();
-	void LowingHP_Player();
-	float GetHP_Player();
 	void SetKilledEnemy_Player();
 	float GetNumOfKilledEnemy_Player();
+	virtual void AppointHP();
 	
 
 private:
+	sf::Sprite playerPlane;
 	TextureHolder textures;
-	float HP;
 	float speed;
-	float crash;
 	float killedEnemy;
 	bool mIsMovingUp, mIsMovingDown, mIsMovingLeft, mIsMovingRight, mIsFire;
 	sf::Time time;
+
 };
 
 

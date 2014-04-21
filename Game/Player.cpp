@@ -2,6 +2,12 @@
 
 #include "std.h"
 
+
+void Player::AppointHP()
+{
+	HP = 10000;
+}
+
 Player::Player()
 {
 	mIsMovingUp = false;
@@ -10,18 +16,17 @@ Player::Player()
 	mIsMovingRight = false;
 	mIsFire = false;
 	speed = 250;
-	HP = 10000;
-	crash = 1000;
 	killedEnemy = 0;
 	textures.Load(Textures::Airplane, "../Game/alienblaster.png");
 	playerPlane.setTexture(textures.Get(Textures::Airplane));
 	playerPlane.setPosition(0.f, 250.f);
 	time = sf::seconds(1.f/10000.f);
+	AppointHP();
 }
 
-sf::Sprite Player:: ReturnSpritePlayer()
+sf::Sprite* Player:: ReturnSpritePlayer()
 {
-	return playerPlane;
+	return &playerPlane;
 }
 
 void Player::FalsemIsFire_Player()
@@ -76,15 +81,6 @@ bool Player::GetmIsFire_Player()
 }
 
 
-void Player::LowingHP_Player()
-{
-	HP -= crash;
-}
-
-float Player::GetHP_Player()
-{
-	return HP;
-}
 
 void Player::SetKilledEnemy_Player()
 {

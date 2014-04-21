@@ -1,8 +1,5 @@
 #pragma once
 
-
-
-
 using namespace std;
 
 class Bullet
@@ -10,7 +7,7 @@ class Bullet
 public:
 	Bullet();
 	void BulletRun_Bullet();
-	float GetDamage_Bullet();
+	float GetDamage_Bullet(); //
 	sf::Sprite spriteBullet;
 
 private:

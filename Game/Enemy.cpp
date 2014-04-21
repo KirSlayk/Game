@@ -3,17 +3,22 @@
 #include "std.h"
 
 
+void Enemy::AppointHP()
+{
+	HP = 6000;
+}
+
 Enemy::Enemy()
 {
 	deathTime = 0;
 	speed = 150;
-	HP = 1200;
 	xPos = (rand() % 600) + 1000.f;
 	yPos = (rand() % 550) + 30.f;
 	time = sf::seconds( 1.f/10000.f );
 	textures.Load(Textures::Enemy, "../Game/neghvar4.png");
 	spriteEnemies.setTexture(textures.Get(Textures::Enemy));
 	spriteEnemies.setPosition(xPos, yPos);
+	AppointHP();
 	
 }
 
@@ -33,10 +38,6 @@ void Enemy::MoveEnemy_Enemy( Player *player, Enemy *enemies )
 	spriteEnemies.move( movement * time.asSeconds() );
 }
 
-void Enemy::LoweringHP_Enemy( Bullet *bullet )
-{
-	HP -= bullet->GetDamage_Bullet();
-}
 
 void Enemy::SwitchBang_Enemy()
 {
@@ -47,10 +48,6 @@ void Enemy::SwitchBang_Enemy()
 	deathTime++;
 }
 
-float Enemy::GetHP_Enemy()
-{
-	return HP;
-}
 
 void Enemy::DeathTime_Enemy()
 {

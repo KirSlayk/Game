@@ -58,8 +58,8 @@ void Game::Run_Game()
 		Shoting_Game();
 		
 		if ( eneMies.size() )
-			for ( int i = 0; i < eneMies.size(); i++)
-			if ( abs( plaYer.playerPlane.getPosition().x - eneMies[i]->spriteEnemies.getPosition().x < 10 ) ){
+			for ( int i = 0; i < (int) eneMies.size(); i++)
+			if ( abs( plaYer.ReturnSpritePlayer()->getPosition().x - eneMies[i]->spriteEnemies.getPosition().x < 10 ) ){
 				Collision_Game();
 				break;
 			}
@@ -77,7 +77,7 @@ void Game::Shoting_Game()
 	if ( plaYer.GetmIsFire_Player() && bulLet.size() < 20 )
 	{
 		bulLet.push_back(new Bullet());
-		bulLet[ bulLet.size() - 1 ]->spriteBullet.setPosition(plaYer.ReturnSpritePlayer().getPosition().x + 65, plaYer.ReturnSpritePlayer().getPosition().y + 32);
+		bulLet[ bulLet.size() - 1 ]->spriteBullet.setPosition(plaYer.ReturnSpritePlayer()->getPosition().x + 65, plaYer.ReturnSpritePlayer()->getPosition().y + 32);
 		plaYer.FalsemIsFire_Player();		
 	}
 }
@@ -88,13 +88,13 @@ void Game::BorderCheck_Game()
 	
 	
 	if (  bulLet.size() )
-		for ( int i = 0; i < bulLet.size() - 1; i++ ){
+		for ( int i = 0; i < (int) bulLet.size() - 1; i++ ){
 			if ( bulLet[i]->spriteBullet.getPosition().x >= 900 && bulLet.at( i )  )
 				bulLet.erase( bulLet.begin() + i );
 		}
 	
 	if ( eneMies.size() )
-		for ( int i = 0; i < eneMies.size() - 1; i++ )
+		for ( int i = 0; i < (int) eneMies.size() - 1; i++ )
 			if ( eneMies[i]->spriteEnemies.getPosition().x < -10 )
 				eneMies.erase( eneMies.begin() + i );
 	
@@ -103,14 +103,14 @@ void Game::BorderCheck_Game()
 	if (backGroundTwo.getPosition().x <= -1150)
 		backGroundTwo.setPosition(1200,0);
 
-	if ( plaYer.ReturnSpritePlayer().getPosition().x < 0 )
-		plaYer.playerPlane.setPosition( 0.0f, plaYer.playerPlane.getPosition().y );
-	if ( plaYer.ReturnSpritePlayer().getPosition().x > 840 )
-		plaYer.playerPlane.setPosition( 840.0f, plaYer.playerPlane.getPosition().y );
-	if ( plaYer.ReturnSpritePlayer().getPosition().y < 0 )
-		plaYer.playerPlane.setPosition( plaYer.playerPlane.getPosition().x, 0.0f );
-	if ( plaYer.ReturnSpritePlayer().getPosition().y > 560 )
-		plaYer.playerPlane.setPosition( plaYer.playerPlane.getPosition().x, 560.0f );
+	if ( plaYer.ReturnSpritePlayer()->getPosition().x < 0 )
+		plaYer.ReturnSpritePlayer()->setPosition( 0.0f, plaYer.ReturnSpritePlayer()->getPosition().y );
+	if ( plaYer.ReturnSpritePlayer()->getPosition().x > 840 )
+		plaYer.ReturnSpritePlayer()->setPosition( 840.0f, plaYer.ReturnSpritePlayer()->getPosition().y );
+	if ( plaYer.ReturnSpritePlayer()->getPosition().y < 0 )
+		plaYer.ReturnSpritePlayer()->setPosition( plaYer.ReturnSpritePlayer()->getPosition().x, 0.0f );
+	if ( plaYer.ReturnSpritePlayer()->getPosition().y > 560 )
+		plaYer.ReturnSpritePlayer()->setPosition( plaYer.ReturnSpritePlayer()->getPosition().x, 560.0f );
 }
 
 
@@ -146,9 +146,9 @@ void Game::Update_Game()
 	muSic.ChangeVolume_mMusic();
 	plaYer.PlayerRun_Player();
 	
-	for ( int i = 0; i < bulLet.size(); i++ )
+	for ( int i = 0; i < (int) bulLet.size(); i++ )
 		bulLet[i]->BulletRun_Bullet();
-	for (int i = 0; i < eneMies.size(); i++ ) 
+	for (int i = 0; i < (int) eneMies.size(); i++ ) 
 		eneMies[i]->MoveEnemy_Enemy( &plaYer, eneMies[i] );	
 	
 	
@@ -162,8 +162,8 @@ void Game::Render_Game()
 {
 	ostringstream str;
 	ostringstream str2;
-	if ( plaYer.GetHP_Player() )
-		str<< " HP "<<plaYer.GetHP_Player();
+	if ( plaYer.GetHP() )
+		str<< " HP "<<plaYer.GetHP();
 	str2<< "Slain Enemies "<< plaYer.GetNumOfKilledEnemy_Player();
 
 	sf::Text text;
@@ -187,12 +187,12 @@ void Game::Render_Game()
 	mWindow.draw(backGroundTwo);
 	mWindow.draw(backGround);
 
-	for ( int i = 0; i < bulLet.size(); i++ )
+	for ( int i = 0; i < (int) bulLet.size(); i++ )
 		mWindow.draw(bulLet[i]->spriteBullet);
 	
-	mWindow.draw(plaYer.ReturnSpritePlayer());
+	mWindow.draw(*plaYer.ReturnSpritePlayer());
 	
-	for ( int i = 0; i < eneMies.size(); i++ )
+	for ( int i = 0; i < (int) eneMies.size(); i++ )
 	{
 		mWindow.draw(eneMies[i]->spriteEnemies);
 		if ( eneMies[i]->GetDeathTime_Enemy() )
@@ -216,10 +216,10 @@ void Game::RunWorld_Game()
 	sf::Vector2f movement(0.f,0.f);
 	
 	if (plaYer.GetmIsMovingLeft_Player())
-		movement.x -=1.5*speed;
+		movement.x -= (float) 1.5*speed;
 	else if (plaYer.GetmIsMovingRight_Player())
-		movement.x -= 3*speed;
-	else movement.x -= 2*speed;
+		movement.x -= (float) 3*speed;
+	else movement.x -= (float) 2*speed;
 	
 	movement.x -= speed;
 	
@@ -231,9 +231,9 @@ void Game::RunWorld_Game()
 void Game::Collision_Game()
 {
 	
-	for (int j = 0; j < eneMies.size(); j++){
+	for (int j = 0; j < (int)eneMies.size(); j++){
 		restart:
-		for (int i = 0; i < bulLet.size(); i++)
+		for (int i = 0; i < (int) bulLet.size(); i++)
 		{
 			if ( bulLet.size() )	
 				if ( abs(bulLet[i]->spriteBullet.getPosition().x - eneMies[j]->spriteEnemies.getPosition().x) <=5 &&
@@ -241,11 +241,12 @@ void Game::Collision_Game()
 					(bulLet[i]->spriteBullet.getPosition().y - eneMies[j]->spriteEnemies.getPosition().y) >= 5)
 				{
 					
-					eneMies[j]->LoweringHP_Enemy( bulLet[i] );
+					eneMies[j]->LoweringHP( eneMies[j] );
+					
 					bulLet.erase( bulLet.begin() + i );
 					
 					
-					if ( eneMies[j]->GetHP_Enemy() <= 0 && !eneMies[j]->GetDeathTime_Enemy() ){
+					if ( eneMies[j]->GetHP() <= 0 && !eneMies[j]->GetDeathTime_Enemy() ){
 						eneMies[j]->spriteEnemies.setTexture(texturBang.Get(Textures::Bang));
 						eneMies[j]->DeathTime_Enemy();
 						plaYer.SetKilledEnemy_Player();
@@ -256,15 +257,16 @@ void Game::Collision_Game()
 				}
 			}
 			
-		if ( abs(eneMies[j]->spriteEnemies.getPosition().x - plaYer.ReturnSpritePlayer().getPosition().x) <=65 &&
-			abs(eneMies[j]->spriteEnemies.getPosition().y - plaYer.ReturnSpritePlayer().getPosition().y) <= 45 &&
-			abs(eneMies[j]->spriteEnemies.getPosition().y - plaYer.ReturnSpritePlayer().getPosition().y) >=1 &&
+		if ( abs(eneMies[j]->spriteEnemies.getPosition().x - plaYer.ReturnSpritePlayer()->getPosition().x) <=65 &&
+			abs(eneMies[j]->spriteEnemies.getPosition().y - plaYer.ReturnSpritePlayer()->getPosition().y) <= 45 &&
+			abs(eneMies[j]->spriteEnemies.getPosition().y - plaYer.ReturnSpritePlayer()->getPosition().y) >=1 &&
 			!eneMies[j]->GetDeathTime_Enemy())
 			{
 				eneMies[j]->spriteEnemies.setTexture(texturBang.Get(Textures::Bang));
+
 				eneMies[j]->DeathTime_Enemy();
-				plaYer.LowingHP_Player();
-				if ( plaYer.GetHP_Player() <= 0 ){
+				plaYer.LoweringHP( &plaYer );
+				if ( plaYer.GetHP() <= 0 ){
 					textures.Load( Textures::GameOver, "../Game/GameOver.png");
 					sf::Sprite GameOverSprite;
 					GameOverSprite.setTexture( textures.Get( Textures::GameOver ) );
