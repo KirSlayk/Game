@@ -13,9 +13,9 @@ public:
 
 	bool GetmIsMovingRight_Player();
 	bool GetmIsMovingLeft_Player();
-	
+	virtual sf::Sprite* ReturnSprite();
 	bool GetmIsFire_Player();
-	sf::Sprite* ReturnSpritePlayer();
+	
 	void FalsemIsFire_Player();
 	void SetKilledEnemy_Player();
 	float GetNumOfKilledEnemy_Player();

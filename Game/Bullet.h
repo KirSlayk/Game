@@ -7,17 +7,14 @@ class Bullet
 public:
 	Bullet();
 	void BulletRun_Bullet();
-	float GetDamage_Bullet(); //
-	sf::Sprite spriteBullet;
+	sf::Sprite* ReturnSprite();
 
 private:
-	
-	float damage;
+	sf::Sprite spriteBullet;
 	float speed;
 	float xPos;
 	float yPos;
 	sf::Time time;
-	
 	TextureHolder textures;
 };
 

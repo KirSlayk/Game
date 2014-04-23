@@ -16,8 +16,8 @@ Enemy::Enemy()
 	yPos = (rand() % 550) + 30.f;
 	time = sf::seconds( 1.f/10000.f );
 	textures.Load(Textures::Enemy, "../Game/neghvar4.png");
-	spriteEnemies.setTexture(textures.Get(Textures::Enemy));
-	spriteEnemies.setPosition(xPos, yPos);
+	ReturnSprite()->setTexture(textures.Get(Textures::Enemy));
+	ReturnSprite()->setPosition(xPos, yPos);
 	AppointHP();
 	
 }
@@ -33,9 +33,9 @@ void Enemy::MoveEnemy_Enemy( Player *player, Enemy *enemies )
 		movement.x -= speed + 60.f;
 	else movement.x -= speed;
 
-	movement.y = sin( enemies->spriteEnemies.getPosition().x / 200 ) * 100; 
+	movement.y = sin( enemies->ReturnSprite()->getPosition().x / 200 ) * 100; 
 	
-	spriteEnemies.move( movement * time.asSeconds() );
+	ReturnSprite()->move( movement * time.asSeconds() );
 }
 
 
@@ -43,7 +43,7 @@ void Enemy::SwitchBang_Enemy()
 {
 	if ( deathTime % 15 == 0){
 		sf::IntRect IntRectangle(305 + 98 * deathTime/15 ,8, 103, 72);
-		spriteEnemies.setTextureRect( IntRectangle );
+		ReturnSprite()->setTextureRect( IntRectangle );
 	}
 	deathTime++;
 }
@@ -53,7 +53,7 @@ void Enemy::DeathTime_Enemy()
 {
 		deathTime++;
 		static sf::IntRect IntRectangle(320,15,85,58);
-		spriteEnemies.setTextureRect( IntRectangle );
+		ReturnSprite()->setTextureRect( IntRectangle );
 }
 
 int Enemy::GetDeathTime_Enemy()
@@ -61,3 +61,7 @@ int Enemy::GetDeathTime_Enemy()
 	return deathTime;
 }
 
+sf::Sprite* Enemy::ReturnSprite()
+{
+	return &spriteEnemies;
+}

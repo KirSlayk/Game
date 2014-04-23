@@ -24,10 +24,6 @@ Player::Player()
 	AppointHP();
 }
 
-sf::Sprite* Player:: ReturnSpritePlayer()
-{
-	return &playerPlane;
-}
 
 void Player::FalsemIsFire_Player()
 {
@@ -90,4 +86,9 @@ void Player::SetKilledEnemy_Player()
 float Player::GetNumOfKilledEnemy_Player()
 {
 	return killedEnemy;
+}
+
+sf::Sprite* Player::ReturnSprite()
+{
+	return &playerPlane;
 }

@@ -13,9 +13,9 @@ public:
 	void DeathTime_Enemy();
 	int GetDeathTime_Enemy();
 	virtual void AppointHP();
-	
+	virtual sf::Sprite* ReturnSprite();
 
-	sf::Sprite spriteEnemies;
+	
 
 private:
 	
@@ -24,5 +24,6 @@ private:
 	float speed;
 	int deathTime;
 	sf::Time time;
+	sf::Sprite spriteEnemies;
 };
 

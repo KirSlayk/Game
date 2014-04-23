@@ -9,10 +9,9 @@ protected:
 
 public:
 	GeneralQuality();
-	//GeneralQuality( int _damage );
 	template <typename T> void LoweringHP( T *arg );
-	//template <typename sf::Sprite> sf::Sprite* ReturnSprite();
-	virtual void AppointHP() {};
+	virtual sf::Sprite* ReturnSprite() = 0;
+	virtual void AppointHP() = 0;
 	virtual int GetHP();
 };
 
@@ -31,8 +30,4 @@ template <typename T> void GeneralQuality::LoweringHP( T* arg )
 
 }
 
-//template <typename sf::Sprite> sf::Sprite* GeneralQuality::ReturnSprite()
-//{
-	//return &sf::Sprite;
-//}
 

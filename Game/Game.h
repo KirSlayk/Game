@@ -18,6 +18,7 @@ private:
 	void Collision_Game();
 	void Shoting_Game();
 	void BorderCheck_Game();
+	void Text_Game();
 private:
 	
 	sf::RenderWindow mWindow;
