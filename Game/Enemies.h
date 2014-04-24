@@ -12,18 +12,10 @@ public:
 	void SwitchBang_Enemy();
 	void DeathTime_Enemy();
 	int GetDeathTime_Enemy();
-	virtual void AppointHP();
 	virtual sf::Sprite* ReturnSprite();
 
-	
-
 private:
-	
-	TextureHolder textures;
-	float xPos, yPos;
-	float speed;
 	int deathTime;
-	sf::Time time;
-	sf::Sprite spriteEnemies;
+	sf::Time time;	
 };
 

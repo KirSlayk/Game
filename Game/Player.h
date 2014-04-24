@@ -10,26 +10,19 @@ public:
 	Player();
 	void HandlePlayerInput_Game( sf::Keyboard::Key key, bool isPressed );
 	void PlayerRun_Player();
-
 	bool GetmIsMovingRight_Player();
 	bool GetmIsMovingLeft_Player();
-	virtual sf::Sprite* ReturnSprite();
 	bool GetmIsFire_Player();
-	
 	void FalsemIsFire_Player();
 	void SetKilledEnemy_Player();
 	float GetNumOfKilledEnemy_Player();
-	virtual void AppointHP();
+	virtual sf::Sprite* ReturnSprite();
 	
 
 private:
-	sf::Sprite playerPlane;
-	TextureHolder textures;
-	float speed;
 	float killedEnemy;
 	bool mIsMovingUp, mIsMovingDown, mIsMovingLeft, mIsMovingRight, mIsFire;
 	sf::Time time;
-
 };
 
 

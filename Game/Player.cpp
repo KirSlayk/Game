@@ -2,26 +2,18 @@
 
 #include "std.h"
 
-
-void Player::AppointHP()
-{
-	HP = 10000;
-}
-
-Player::Player()
+Player::Player() : GeneralQuality( 1000, 10000, 250.f )
 {
 	mIsMovingUp = false;
 	mIsMovingDown = false;
 	mIsMovingLeft = false;
 	mIsMovingRight = false;
 	mIsFire = false;
-	speed = 250;
 	killedEnemy = 0;
 	textures.Load(Textures::Airplane, "../Game/alienblaster.png");
-	playerPlane.setTexture(textures.Get(Textures::Airplane));
-	playerPlane.setPosition(0.f, 250.f);
+	sprite.setTexture(textures.Get(Textures::Airplane));
+	sprite.setPosition(0.f,250.f);
 	time = sf::seconds(1.f/10000.f);
-	AppointHP();
 }
 
 
@@ -57,7 +49,7 @@ void Player::PlayerRun_Player()
 	if (mIsMovingRight)
 		movement.x += speed;
 	
-	playerPlane.move(movement * time.asSeconds());
+	sprite.move(movement * time.asSeconds());
 	
 }
 
@@ -90,5 +82,5 @@ float Player::GetNumOfKilledEnemy_Player()
 
 sf::Sprite* Player::ReturnSprite()
 {
-	return &playerPlane;
+	return &sprite;
 }

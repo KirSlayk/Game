@@ -34,13 +34,11 @@ private:
 	
 	vector<Enemy*> eneMies;
 	vector<Bullet*> bulLet;
+	//BackGround backGround[2];
 	Player plaYer;
 	mMusic muSic;
 	
 	int speed;
-	
-
-	
 };
 
 

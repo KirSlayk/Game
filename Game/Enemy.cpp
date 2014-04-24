@@ -3,22 +3,13 @@
 #include "std.h"
 
 
-void Enemy::AppointHP()
-{
-	HP = 6000;
-}
-
-Enemy::Enemy()
+Enemy::Enemy() : GeneralQuality( 1000, 6000, 150.f )
 {
 	deathTime = 0;
-	speed = 150;
-	xPos = (rand() % 600) + 1000.f;
-	yPos = (rand() % 550) + 30.f;
 	time = sf::seconds( 1.f/10000.f );
 	textures.Load(Textures::Enemy, "../Game/neghvar4.png");
 	ReturnSprite()->setTexture(textures.Get(Textures::Enemy));
-	ReturnSprite()->setPosition(xPos, yPos);
-	AppointHP();
+	ReturnSprite()->setPosition((rand() % 600) + 1000.f , (rand() % 550) + 30.f);
 	
 }
 
@@ -63,5 +54,5 @@ int Enemy::GetDeathTime_Enemy()
 
 sf::Sprite* Enemy::ReturnSprite()
 {
-	return &spriteEnemies;
+	return &sprite;
 }

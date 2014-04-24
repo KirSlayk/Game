@@ -6,12 +6,15 @@ class GeneralQuality
 protected: 
 	int damage;
 	int HP;
+	float speed;
+	TextureHolder textures;
+	sf::Sprite sprite;
 
 public:
 	GeneralQuality();
+	GeneralQuality( int damage, int HP, float speed );
 	template <typename T> void LoweringHP( T *arg );
 	virtual sf::Sprite* ReturnSprite() = 0;
-	virtual void AppointHP() = 0;
 	virtual int GetHP();
 };
 
@@ -29,5 +32,3 @@ template <typename T> void GeneralQuality::LoweringHP( T* arg )
 	}
 
 }
-
-
