@@ -33,10 +33,12 @@ void Game::Run_Game()
 	
 	while (mWindow.isOpen())
 	{
-		if ( timeForEneMies  && timeForEneMies % 100 < 30 || !eneMies.size() )
+		if ( timeForEneMies  && timeForEneMies % 100 < 30 || eneMies.size() == 1 || !eneMies.size() )
 		{
 			numOfEnemy++;
-			numOfEnemy = timeForEneMies% 3;
+			numOfEnemy = timeForEneMies% 4;
+			if (!eneMies.size())
+				numOfEnemy = 3;	
 			if (eneMies.size() < 5 ){
 				int size = eneMies.size();
 				for ( int i = size; i < size + numOfEnemy - 1; i++ )
@@ -84,9 +86,6 @@ void Game::Shoting_Game()
 
 void Game::BorderCheck_Game()
 {
-	
-	
-	
 	if (  bulLet.size() )
 		for ( int i = 0; i < (int) bulLet.size() - 1; i++ ){
 			if ( bulLet[i]->ReturnSprite()->getPosition().x >= 900 && bulLet.at( i )  )
@@ -97,6 +96,8 @@ void Game::BorderCheck_Game()
 		for ( int i = 0; i < (int) eneMies.size() - 1; i++ )
 			if ( eneMies[i]->ReturnSprite()->getPosition().x < -10 )
 				eneMies.erase( eneMies.begin() + i );
+
+	obstaCle.BorderCheck_Obstacle();
 	
 	if (backGround.getPosition().x <= -1150)
 		backGround.setPosition(1200,0);
@@ -171,16 +172,16 @@ void Game::Render_Game()
 		mWindow.draw(*(bulLet[i]->ReturnSprite()));
 	
 	mWindow.draw(*plaYer.ReturnSprite());
-	
+	mWindow.draw(*obstaCle.ReturnSprite());
 	for ( int i = 0; i < (int) eneMies.size(); i++ )
 	{
 		mWindow.draw(*(eneMies[i]->ReturnSprite()));
 		if ( eneMies[i]->GetDeathTime_Enemy() )
 		{
-			if ( eneMies[i]->GetDeathTime_Enemy() > 74 )
+			if ( eneMies[i]->GetDeathTime_Enemy() > 350 )
 				eneMies.erase( eneMies.begin() + i );
 			
-			else if ( eneMies[i]->GetDeathTime_Enemy() <= 74 )
+			else if ( eneMies[i]->GetDeathTime_Enemy() <= 350 )
 				eneMies[i]->SwitchBang_Enemy();
 		}
 	}
@@ -197,15 +198,20 @@ void Game::RunWorld_Game()
 	
 	if (plaYer.GetmIsMovingLeft_Player())
 		movement.x -= (float) 1.5*speed;
-	else if (plaYer.GetmIsMovingRight_Player())
+	else if (plaYer.GetmIsMovingRight_Player()){
 		movement.x -= (float) 3*speed;
-	else movement.x -= (float) 2*speed;
-	
+		obstaCle.ObstacleMove_Obstacle();
+		obstaCle.ObstacleMove_Obstacle();
+	}
+	else{ 
+		movement.x -= (float) 2*speed;
+		obstaCle.ObstacleMove_Obstacle();
+	}
 	movement.x -= speed;
 	
 	backGround.move( movement * TimePerFrame.asSeconds() );
 	backGroundTwo.move( movement * TimePerFrame.asSeconds() );
-	
+	obstaCle.ObstacleMove_Obstacle();
 }
 
 void Game::Collision_Game()
@@ -262,6 +268,32 @@ void Game::Collision_Game()
 				}
 			}	
 	}
+	for ( int i = 0; i < eneMies.size(); i++ ){
+		if ( abs(eneMies[i]->ReturnSprite()->getPosition().x - obstaCle.ReturnSprite()->getPosition().x) <= 120 &&
+			abs(eneMies[i]->ReturnSprite()->getPosition().y - (obstaCle.ReturnSprite()->getPosition().y + 55)) <= 65 &&
+			!eneMies[i]->GetDeathTime_Enemy())
+			{
+				eneMies[i]->ReturnSprite()->setTexture(texturBang.Get(Textures::Bang));
+				eneMies[i]->DeathTime_Enemy();
+				
+		}
+	}
+	if ( abs( plaYer.ReturnSprite()->getPosition().x + 20 - obstaCle.ReturnSprite()->getPosition().x - 75) <= 90 &&
+		 abs( (plaYer.ReturnSprite()->getPosition().y + 15) - (obstaCle.ReturnSprite()->getPosition().y + 65)) <= 75 ){
+						textures.Load( Textures::GameOver, "../Game/GameOver.png");
+						sf::Sprite GameOverSprite;
+						GameOverSprite.setTexture( textures.Get( Textures::GameOver ) );
+						GameOverSprite.setPosition( 40.f, -1.f );
+					
+					
+						while ( mWindow.isOpen() ){
+							mWindow.clear();
+							mWindow.draw( GameOverSprite );
+							mWindow.display();
+							ProcessEvents_Game();
+						}
+
+				}
 	
 }
 void Game::Text_Game()

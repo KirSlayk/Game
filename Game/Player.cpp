@@ -2,7 +2,7 @@
 
 #include "std.h"
 
-Player::Player() : GeneralQuality( 1000, 10000, 250.f )
+Player::Player() : Object( 1000, 10000, 250.f )
 {
 	mIsMovingUp = false;
 	mIsMovingDown = false;

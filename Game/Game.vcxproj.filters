@@ -36,7 +36,10 @@
     <ClCompile Include="Music.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="GeneralQuality.cpp">
+    <ClCompile Include="Obstacles.cpp">
+      <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +65,10 @@
     <ClInclude Include="Music.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
-    <ClInclude Include="GeneralQuality.h">
+    <ClInclude Include="Obstacles.h">
+      <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
   </ItemGroup>

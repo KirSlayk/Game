@@ -3,7 +3,7 @@
 #include "std.h"
 
 
-Enemy::Enemy() : GeneralQuality( 1000, 6000, 150.f )
+Enemy::Enemy() : Object( 1000, 6000, 150.f )
 {
 	deathTime = 0;
 	time = sf::seconds( 1.f/10000.f );
@@ -32,8 +32,8 @@ void Enemy::MoveEnemy_Enemy( Player *player, Enemy *enemies )
 
 void Enemy::SwitchBang_Enemy()
 {
-	if ( deathTime % 15 == 0){
-		sf::IntRect IntRectangle(305 + 98 * deathTime/15 ,8, 103, 72);
+	if ( deathTime % 70 == 0){
+		sf::IntRect IntRectangle(305 + 98 * deathTime/70 ,8, 103, 72);
 		ReturnSprite()->setTextureRect( IntRectangle );
 	}
 	deathTime++;

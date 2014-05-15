@@ -1,6 +1,8 @@
 #pragma once
+using namespace std;
 
 #include <iostream>
+#include <memory>
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
@@ -16,8 +18,9 @@
 #include "SFML/Audio.hpp"
 #include "Music.h"
 #include "TextureHolder.h"
-#include "GeneralQuality.h"
+#include "Object.h"
 #include "vector"
+#include "Obstacles.h"
 #include "Enemies.h"
 #include "Game.h"
 

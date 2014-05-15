@@ -6,7 +6,7 @@
 
 mMusic::mMusic()
 {
-	volume = 50;
+	volume = 10;
 	deltaVolume = 5;
 	isUpVolume = false;
 	isDownVolume = false;

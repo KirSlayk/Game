@@ -34,8 +34,9 @@ private:
 	
 	vector<Enemy*> eneMies;
 	vector<Bullet*> bulLet;
-	//BackGround backGround[2];
+	
 	Player plaYer;
+	Obstacle obstaCle;
 	mMusic muSic;
 	
 	int speed;

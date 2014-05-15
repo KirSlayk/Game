@@ -4,7 +4,7 @@
 #include "Bullet.h"
 
 
-class Enemy : public GeneralQuality
+class Enemy : public Object
 {
 public:
 	Enemy();

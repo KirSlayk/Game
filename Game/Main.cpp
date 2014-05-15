@@ -1,6 +1,7 @@
 #include "std.h"
 
 
+
 void main()
 {
 	Game game;

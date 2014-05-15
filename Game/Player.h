@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class Player : public GeneralQuality
+class Player : public Object
 {
 public:
 	Player();
